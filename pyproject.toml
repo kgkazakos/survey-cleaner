@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "survey-cleaner"
+version = "0.1.0"
+description = "Remove speeders, straight-liners and gibberish open-ends from raw survey exports"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Kostas Kazakos" }]
+keywords = ["ux-research", "survey", "data-quality", "nlp", "cli"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+    "click>=8.0",
+    "pandas>=1.5",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+anthropic = ["anthropic>=0.20"]
+gemini = ["google-generativeai>=0.5"]
+all = ["openai>=1.0", "anthropic>=0.20", "google-generativeai>=0.5"]
+dev = ["pytest>=7.0", "ruff>=0.4"]
+
+[project.scripts]
+survey-cleaner = "survey_cleaner.cli:cli"
+
+[project.urls]
+Repository = "https://github.com/kgkazakos/survey-cleaner"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["survey_cleaner*"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
